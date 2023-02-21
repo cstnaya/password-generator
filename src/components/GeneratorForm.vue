@@ -2,9 +2,15 @@
   <section class="form container">
     <div class="row">
       <div>Character Length</div>
-      <div class="text-primary">0</div>
+      <div class="text-primary">{{ length }}</div>
     </div>
-    <input type="range" min="0" max="30" />
+    <input
+      type="range"
+      min="0"
+      max="30"
+      :value="length"
+      @input="(e) => changeLength(e.target.value)"
+    />
     <GeneratorList />
     <section class="password-strength row">
       <h3>strength</h3>
@@ -19,6 +25,13 @@
 
 <script setup>
 import GeneratorList from "@/components/GeneratorList.vue";
+import { storeToRefs } from "pinia";
+import { useInputStore } from "@/stores/input";
+
+const store = useInputStore();
+
+const { length } = storeToRefs(store);
+const { changeLength } = store;
 </script>
 
 <style scoped lang="scss">
@@ -27,6 +40,7 @@ import GeneratorList from "@/components/GeneratorList.vue";
   color: $white;
   display: grid;
   gap: 1em;
+  margin-bottom: 1em;
 }
 
 .password-strength {

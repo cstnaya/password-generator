@@ -2,21 +2,18 @@
   <section class="form container">
     <div class="row">
       <div>Character Length</div>
-      <div class="text-primary">{{ length }}</div>
+      <div class="text-primary">{{ userInput.length }}</div>
     </div>
-    <input
-      type="range"
-      min="0"
-      max="30"
-      :value="length"
-      @input="(e) => changeLength(e.target.value)"
-    />
+    <input type="range" min="0" max="30" v-model.number="userInput.length" />
     <GeneratorList />
-    <section class="password-strength row">
-      <h3>strength</h3>
-      <div>1234</div>
+    <section class="text-danger" v-if="error">
+      {{ error }}
     </section>
-    <button class="btn btn-primary btn-generate" @click.prevent="">
+    <GeneratorPanel />
+    <button
+      class="btn btn-primary btn-generate"
+      @click.prevent="onHandleGenerate"
+    >
       Generate
       <font-awesome-icon icon="fas fa-arrow-right" class="btn-generate__icon" />
     </button>
@@ -24,14 +21,14 @@
 </template>
 
 <script setup>
+import GeneratorPanel from "@/components/GeneratorPanel.vue";
 import GeneratorList from "@/components/GeneratorList.vue";
+import { usePasswordStore } from "@/stores/passwordStore";
 import { storeToRefs } from "pinia";
-import { useInputStore } from "@/stores/input";
 
-const store = useInputStore();
-
-const { length } = storeToRefs(store);
-const { changeLength } = store;
+const passwordStore = usePasswordStore();
+const { userInput, error } = storeToRefs(passwordStore);
+const { onHandleGenerate } = passwordStore;
 </script>
 
 <style scoped lang="scss">
@@ -43,19 +40,18 @@ const { changeLength } = store;
   margin-bottom: 1em;
 }
 
-.password-strength {
-  background: $dark;
-  color: $text-grey;
-  text-transform: uppercase;
-  padding: 1.5em;
-}
-
 .btn-generate {
   text-transform: uppercase;
   font-weight: bold;
 
   .btn-generate__icon {
     margin-left: 10px;
+    transition: 0.4s all ease;
+  }
+
+  &:hover .btn-generate__icon,
+  &:active .btn-generate__icon {
+    transform: translateX(12px);
   }
 }
 </style>

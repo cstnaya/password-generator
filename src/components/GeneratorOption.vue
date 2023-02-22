@@ -1,12 +1,17 @@
 <template>
   <label class="option">
-    <input type="checkbox" />
-    <span class="option__title">{{ props.label }}</span>
+    <input
+      type="checkbox"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.checked)"
+    />
+    <span class="option__title">{{ label }}</span>
   </label>
 </template>
 
 <script setup>
-const props = defineProps(["label"]);
+defineProps(["modelValue", "label"]);
+defineEmits(["update:modelValue"]);
 </script>
 
 <style scoped lang="scss">

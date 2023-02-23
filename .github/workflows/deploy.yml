@@ -6,7 +6,7 @@ on:
 permissions:
   contents: write
 jobs:
-  test:
+  test-and-build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -17,13 +17,6 @@ jobs:
 
       - name: Test 🎮
         run: npm run test:unit
-
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    needs: test
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
         
       - name: Build
         run: npm run build

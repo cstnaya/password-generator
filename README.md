@@ -42,7 +42,7 @@ This is a solution to the [Password generator app](https://www.frontendmentor.io
 8. use testing tools for testing vue component
 9.  deploying on github action
     - [how to use github action](https://github.com/marketplace/actions/deploy-to-github-pages)
-10. vue unit test (todo)
+10. vue unit test
 
 ## Deploy
 This website is deployed on Github pages by Github action. [Learn how to use](https://github.com/marketplace/actions/deploy-to-github-pages).

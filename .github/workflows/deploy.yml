@@ -1,23 +1,31 @@
 name: deploy vue project
-on: 
+on:
   push:
     branches:
       - master
 permissions:
   contents: write
-jobs: 
-  build-and-deploy:
+jobs:
+  test:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
       - name: Install and Build 🔧
-        run: |
-          npm ci
-          npm run build
-        
+        run: npm ci
+
+      - name: Test 🎮
+        run: npm run test:unit
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Build
+        run: npm run build
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
-        with: 
+        with:
           folder: dist # The folder the action should deploy.

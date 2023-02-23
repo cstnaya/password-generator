@@ -14,4 +14,12 @@ module.exports = {
   rules: {
     "vue/multi-word-component-names": "off",
   },
+  globals: {
+    vi: true,
+    describe: true,
+    it: true,
+    expect: true,
+    vitest: true,
+    beforeEach: true,
+  },
 };
